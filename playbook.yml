@@ -1,0 +1,44 @@
+---
+- hosts: sample_staging_1
+  remote_user: root
+  tasks:
+  - name: copy deployment scipt 
+    copy:
+      src: deployment.sh
+      dest: /root/deployment.sh 
+      mode: 0777
+
+  - name: copy env variable 
+    copy:
+      src: .env
+      dest: /root/.env
+      mode: 0777
+
+
+  - name: Execute the command to restart the app
+    shell: /root/deployment.sh > /root/output.txt
+    register: res
+
+  - debug: msg="{{ res.stdout }}"
+
+- hosts: sample_staging_2
+  remote_user: root
+  tasks:
+  - name: copy deployment scipt 
+    copy:
+      src: deployment.sh
+      dest: /root/deployment.sh 
+      mode: 0777
+
+  - name: copy env variable 
+    copy:
+      src: .env
+      dest: /root/.env
+      mode: 0777
+
+
+  - name: Execute the command to restart the app
+    shell: /root/deployment.sh > /root/output.txt
+    register: res
+
+  - debug: msg="{{ res.stdout }}"
